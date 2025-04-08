@@ -42,8 +42,11 @@
   <br>
   <button onclick="encrypt()">تشفير</button>
   <button onclick="decrypt()">فك التشفير</button>
+  <button onclick="copyOutput()">نسخ النتيجة</button>
   <br>
-  <textarea id="output" placeholder="النتيجة تظهر هنا..."></textarea>  <script>
+  <textarea id="output" placeholder="النتيجة تظهر هنا..."></textarea>
+
+  <script>
     const map = {
       'ا': 'آ',
       'م': '#',
@@ -62,11 +65,20 @@
 
     function decrypt() {
       let text = document.getElementById('input').value;
-      text = text.replace(/^زلنيد\s*|\s*أركسون$/g, '');
+      text = text.replace(/^زلنيد\\s*|\\s*أركسون$/g, '');
       let reversedMap = Object.fromEntries(Object.entries(map).map(([k, v]) => [v, k]));
       let restored = text.replace(/[آ#%^$!]/g, char => reversedMap[char] || char);
       let original = restored.split('').reverse().join('');
       document.getElementById('output').value = original;
     }
-  </script></body>
+
+    function copyOutput() {
+      let output = document.getElementById('output');
+      output.select();
+      output.setSelectionRange(0, 99999); // للأجهزة المحمولة
+      document.execCommand('copy');
+      alert('تم نسخ النتيجة!');
+    }
+  </script>
+</body>
 </html>
