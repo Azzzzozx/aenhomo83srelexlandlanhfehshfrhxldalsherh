@@ -1,0 +1,72 @@
+<!DOCTYPE html><html lang="ar">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>مُشفّر إكسلاند</title>
+  <style>
+    body {
+      font-family: 'Tahoma', sans-serif;
+      background-color: #111;
+      color: #0f0;
+      text-align: center;
+      padding: 30px;
+    }
+    textarea {
+      width: 80%;
+      height: 100px;
+      margin: 10px;
+      font-size: 18px;
+      background: #222;
+      color: #0f0;
+      border: 1px solid #0f0;
+      padding: 10px;
+    }
+    button {
+      background-color: #0f0;
+      color: #000;
+      border: none;
+      padding: 10px 20px;
+      margin: 10px;
+      font-size: 16px;
+      cursor: pointer;
+      border-radius: 8px;
+    }
+    h1 {
+      margin-bottom: 30px;
+    }
+  </style>
+</head>
+<body>
+  <h1>مُشفّر إكسلاند</h1>
+  <textarea id="input" placeholder="أدخل النص هنا..."></textarea>
+  <br>
+  <button onclick="encrypt()">تشفير</button>
+  <button onclick="decrypt()">فك التشفير</button>
+  <br>
+  <textarea id="output" placeholder="النتيجة تظهر هنا..."></textarea>  <script>
+    const map = {
+      'ا': 'آ',
+      'م': '#',
+      'ن': '%',
+      'ك': '^',
+      'س': '$',
+      'ب': '!',
+    };
+
+    function encrypt() {
+      let text = document.getElementById('input').value;
+      let reversed = text.split('').reverse().join('');
+      let encrypted = reversed.replace(/[امنكسب]/g, char => map[char] || char);
+      document.getElementById('output').value = `زلنيد ${encrypted} أركسون`;
+    }
+
+    function decrypt() {
+      let text = document.getElementById('input').value;
+      text = text.replace(/^زلنيد\s*|\s*أركسون$/g, '');
+      let reversedMap = Object.fromEntries(Object.entries(map).map(([k, v]) => [v, k]));
+      let restored = text.replace(/[آ#%^$!]/g, char => reversedMap[char] || char);
+      let original = restored.split('').reverse().join('');
+      document.getElementById('output').value = original;
+    }
+  </script></body>
+</html>
